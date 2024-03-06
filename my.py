@@ -177,7 +177,7 @@ def L5(path, target_file):
                         current = float(current_match.group(1))
                         adj_intensity = int(adj_intensity_match.group(1))
                         battery = re.search(r'Battery : (\d+)', file_content).group(1)
-                        core_temp_match = re.search(r'Core Temp. : (\d+)', file_content)
+                        core_temp_match = re.search(r'Core Temperature : (\d+)', file_content)
 
                         if core_temp_match:
                             core_Temp = core_temp_match.group(1)
@@ -258,7 +258,7 @@ def L6(path, target_file):
                         current = float(current_match.group(1))
                         adj_intensity = int(adj_intensity_match.group(1))
                         battery = re.search(r'Battery : (\d+)', file_content).group(1)
-                        core_temp_match = re.search(r'Core Temp. : (\d+)', file_content)
+                        core_temp_match = re.search(r'Core Temperature : (\d+)', file_content)
 
                         if core_temp_match:
                             core_Temp = core_temp_match.group(1)
