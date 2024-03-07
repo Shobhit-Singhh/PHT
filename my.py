@@ -3,6 +3,10 @@ import numpy as np
 import re
 import pandas as pd
 import os
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+
 
 def plot_best_fit_line(x_column, y_column, data):
     # Linear regression to find the best fit line
