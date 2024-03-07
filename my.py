@@ -431,16 +431,16 @@ def L7(path, target_file,refernce_file):
 
 
 
-def process(path,name):
+def process(path,name,flag):
     all_files = [x for x in os.listdir(path) if x.endswith(".txt")]
-    
-    L1_files = [x for x in all_files if x.find('L1') != -1]
-    L3_files = [x for x in all_files if x.find('L3') != -1]
-    L5_files = [x for x in all_files if x.find('L5') != -1]
-    L6_files = [x for x in all_files if x.find('L6') != -1]
 
-    L7_files = [x for x in all_files if x.find('L7') != -1]
+    L1_files = [x for x in all_files if 'L1' in x]
+    L3_files = [x for x in all_files if 'L3' in x]
+    L5_files = [x for x in all_files if 'L5' in x]
+    L6_files = [x for x in all_files if 'L6' in x]
+    L7_files = [x for x in all_files if 'L7' in x]
 
+        
     if L1_files:
         l1_name = L1_files[0]
         df = L1(path,l1_name)
@@ -456,15 +456,21 @@ def process(path,name):
     if L6_files:
         l6_name = L6_files[0]
         df = L6(path,l6_name)
-    
-    if L7_files:
+
+    if L7_files and not flag:
+        st.error("Reference file is required for L7")
+        
+    elif L7_files and flag:
         l7_name = L7_files[0]
-        df = L7(path,l7_name)
+        df = L7(path,l7_name,flag)
+
 
 def main():
     with st.sidebar.form("file_upload_form"):
         st.write("## Upload Files")
         uploaded_files = st.file_uploader("You can choose multiple files", type=["txt"], accept_multiple_files=True)
+        ref_data_file = st.file_uploader("Reference file required for L7", type=["txt"])
+
         submit_button = st.form_submit_button("Process Files")
 
     if submit_button:
@@ -480,9 +486,10 @@ def main():
 
         name = uploaded_files[0].name
         
-        df = process(data_directory,name)
+        df = process(data_directory,name,ref_data_file)
     
         os.system(f"rm -rf {data_directory}")
+
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide",initial_sidebar_state="auto")
