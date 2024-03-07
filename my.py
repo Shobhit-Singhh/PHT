@@ -4,6 +4,37 @@ import re
 import pandas as pd
 import os
 
+def plot_best_fit_line(x_column, y_column, data):
+    # Linear regression to find the best fit line
+    x_values = data[x_column].values
+    y_values = data[y_column].values
+    slope, intercept = np.polyfit(x_values, y_values, 1)
+    line_of_best_fit = slope * x_values + intercept
+
+    # Create a plot
+    fig = go.Figure()
+
+    # Add the scatter plot
+    fig.add_trace(go.Scatter(x=x_values, y=y_values, mode="markers", name=f"{y_column} Data"))
+
+    # Add the best fit line
+    fig.add_trace(go.Scatter(x=x_values, y=line_of_best_fit, mode="lines", name=f"Best Fit Line for {y_column}"))
+
+    # Update layout
+    fig.update_layout(
+        title_text=f"Scatter Plot with Best Fit Line for {y_column}",
+        showlegend=True,
+        width=800,  
+        height=800
+    )
+    # Show the plot
+    st.plotly_chart(fig)
+    # calculate the slop of best fit line
+    st.write(f"The best fit line for {y_column} is y = {slope:.4f}x + {intercept:.4f}")
+    return slope
+
+
+
 def L1(path, target_file):
     with st.expander("L1 Test results"):
         all_L1_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L1') != -1]
@@ -307,7 +338,99 @@ def L6(path, target_file):
         st.dataframe(L6_df)
         st.dataframe(L6_summary_df)
     
-    
+
+
+def L7(path, target_file,refernce_file):
+    with st.expander("L7 Test results"):
+        all_L7_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L7') != -1]
+        device_list = list(set([x.split('_')[0] for x in all_L7_files]))
+        # st.write(all_L7_files)
+        # st.write(device_list)
+        st.subheader("Level 7", help = "_")
+        L7_df = pd.DataFrame()
+        df_avg_cv = pd.DataFrame(index=["Avg_CV%"])
+
+        for device in device_list:
+            files = [x for x in all_L7_files if x.find(device) != -1]
+            files.sort()
+            for i, file_name in enumerate(files):
+                with open(os.path.join(path, file_name), 'r') as file:
+                    file_content = file.read()
+
+                    version_match = re.search(r'Version : (.+)', file_content)
+                    wavelength_match = re.search(r'Enter Wavelength : (\d+)', file_content)
+                    dac_match = re.search(r'Adjusted DAC Value : (\d+)', file_content)
+                    current_match = re.search(r'Current drawn : ([\d.]+) mA', file_content)
+                    adj_intensity_match = re.search(r'Adjusted Intensity : (\d+)', file_content)
+
+                    if version_match and wavelength_match and dac_match and current_match and adj_intensity_match:
+                        version = version_match.group(1)
+                        wavelength = int(wavelength_match.group(1))
+                        dac = int(dac_match.group(1))
+                        current = float(current_match.group(1))
+                        adj_intensity = int(adj_intensity_match.group(1))
+                        
+                        L7_df.at["Version", file_name.split('.')[0]] = version
+                        L7_df.at["Wavelength", file_name.split('.')[0]] = wavelength
+                        L7_df.at["DAC", file_name.split('.')[0]] = dac
+                        L7_df.at["Current(mA)", file_name.split('.')[0]] = current
+                        L7_df.at["Adj. Int", file_name.split('.')[0]] = adj_intensity
+                        
+                        data_points_index = re.findall("Press Enter to start...([\s\S]+)Done.", file_content)
+                        for j, data_point in enumerate(data_points_index):
+                            # Extract numerical values from the data
+                            numbers = re.findall(r'\b\d+\b', data_point)
+
+                            # Convert the numbers to integers
+                            data_points = [int(num) for i, num in enumerate(numbers) if i % 3 == 0]
+
+                            # Calculate statistics
+                            mean = np.mean(data_points)
+                            sd = np.std(data_points)
+                            cv = (sd / mean) * 100
+                            data_range = max(data_points) - min(data_points)
+
+                            # Update the DataFrame
+                            L7_df.at["Mean", file_name.split('.')[0]] = mean.round(2)
+                            L7_df.at["SD", file_name.split('.')[0]] = sd.round(4)
+                            L7_df.at["CV%", file_name.split('.')[0]] = cv.round(4)
+                            L7_df.at["Range", file_name.split('.')[0]] = data_range
+                            for k, data_point in enumerate(data_points):
+                                L7_df.at[k, file_name.split('.')[0]] = data_point
+        st.dataframe(L7_df)
+        
+        values = [float(line.strip().decode('utf-8')) for line in refernce_file if line.strip().replace(b'.', b'', 1).isdigit()]
+        repeated_values = np.tile(values, 3)
+        repeated_values.sort()
+        analysis_data = pd.DataFrame({"Reference": repeated_values})
+        analysis_data.index = range(1, 31)
+
+        device_intensity = L7_df.loc[1:,:].astype(float)
+        blank_intensity = L7_df.loc[0, :].astype(float)
+        
+        absorption_values = pd.DataFrame(np.log10(blank_intensity / device_intensity), columns=L7_df.columns)
+        analysis_data = pd.concat([analysis_data, absorption_values], axis=1)
+        st.dataframe(analysis_data)
+        
+        # plot the graph here
+        st.subheader("Best Fit Line Plot")
+        slops = []
+        for i in range(1, len(analysis_data.columns)):
+            st.write(f"Device: {analysis_data.columns[i]}")
+            slop = plot_best_fit_line("Reference", analysis_data.columns[i], analysis_data)
+            slops.append(slop)
+            st.markdown("---")  
+        # summery dataframe
+        L7_summary_df = pd.DataFrame()
+        L7_summary_df['Device'] = device_list
+        L7_summary_df['Number of Files'] = [len([x for x in all_L7_files if x.find(device) != -1]) for device in device_list]
+        
+        L7_summary_df["Best fit slop"] = slops  
+        L7_summary_df['file'] = ['  ||  '.join([x for x in all_L7_files if x.find(device) != -1]) for device in device_list]
+        st.dataframe(L7_summary_df)
+
+
+
 def process(path,name):
     all_files = [x for x in os.listdir(path) if x.endswith(".txt")]
     
