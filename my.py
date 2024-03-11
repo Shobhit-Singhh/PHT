@@ -62,7 +62,7 @@ def L1(path, target_file):
         all_L1_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L1') != -1]
         device_list = list(set([x.split('_')[0] for x in all_L1_files]))
 
-        st.subheader("Level 1", help="_")
+        st.subheader("Level 1", help="CONTINUOUS BLANK TEST WITHOUT INCUBATOR.")
         L1_df = pd.DataFrame()
         df_avg_cv = pd.DataFrame(index=["Avg_CV%"])
 
@@ -141,7 +141,7 @@ def L3(path, target_file):
         device_list = list(set([x.split('_')[0] for x in all_L3_files]))
         # st.write(all_L3_files)
         # st.write(device_list)
-        st.subheader("Level 3", help = "_")
+        st.subheader("Level 3", help = "REINSERTION TEST WITH WATER")
         L3_df = pd.DataFrame()
         df_avg_cv = pd.DataFrame(index=["Avg_CV%"])
         
@@ -220,7 +220,7 @@ def L5(path, target_file):
         device_list = list(set([x.split('_')[0] for x in all_L6_files]))
         # st.write(all_L6_files)
         # st.write(device_list)
-        st.subheader("Level 5", help = "_")
+        st.subheader("Level 5", help = "CONTINUOUS BLANK TEST WITH INCUBATOR")
         L6_df = pd.DataFrame()
         df_avg_cv = pd.DataFrame(index=["Avg_CV%"])
 
@@ -309,7 +309,7 @@ def L6(path, target_file):
         device_list = list(set([x.split('_')[0] for x in all_L6_files]))
         # st.write(all_L6_files)
         # st.write(device_list)
-        st.subheader("Level 6", help = "_")
+        st.subheader("Level 6", help = "CONTINUOUS WATER TEST WITH INCUBATOR")
         L6_df = pd.DataFrame()
         df_avg_cv = pd.DataFrame(index=["Avg_CV%"])
 
@@ -405,7 +405,7 @@ def L7(path, target_file):
             all_L7_files = [x for x in os.listdir(path) if x.endswith(".txt") and 'L7' in x]
             device_list = list(set([x.split('_')[0] for x in all_L7_files]))
 
-            st.subheader("Level 7", help="_")
+            st.subheader("Level 7", help="DEVICE TRACEABILITY WITH UV-SPECTROPHOTOMETER")
             L7_df = pd.DataFrame()
             df_avg_cv = pd.DataFrame(index=["Avg_CV%"])
 
@@ -537,7 +537,7 @@ def process(path,name):
 
 def main():
     with st.sidebar.form("file_upload_form"):
-        st.write("## Upload Files")
+        st.markdown("## Upload Files", help="Please upload the files to be processed, you can alse select multiple files form different levels at once")
         uploaded_files = st.file_uploader("You can choose multiple files", type=["txt"], accept_multiple_files=True)
 
         submit_button = st.form_submit_button("Process Files")
@@ -564,4 +564,3 @@ if __name__ == "__main__":
     st.set_page_config(layout="wide",initial_sidebar_state="auto")
     st.title("Device Testing")
     main()
-
