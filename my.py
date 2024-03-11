@@ -537,7 +537,7 @@ def process(path,name):
 
 def main():
     with st.sidebar.form("file_upload_form"):
-        st.markdown("## Upload Files", help="Please upload the files to be processed, you can alse select multiple files form different levels at once")
+        st.markdown("## Upload Files", help="Instructions: Please upload the files to be processed. You are allowed to select multiple files of different levels as well.")
         uploaded_files = st.file_uploader("You can choose multiple files", type=["txt"], accept_multiple_files=True)
 
         submit_button = st.form_submit_button("Process Files")
