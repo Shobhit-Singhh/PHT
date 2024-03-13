@@ -402,7 +402,7 @@ def L3(path, target_file):
         L3_528, L3_620, L3_367, L3_405 = st.tabs(["528", "620", "367", "405"])
 
         with L3_528:
-            all_L3_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L3') != -1]
+            all_L3_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L3') != -1 and x.find('528') != -1]
             device_list = list(set([x.split('_')[-4] for x in all_L3_files]))
             if len(all_L3_files) == 0:
                 st.write("No 528 L3 files found")
