@@ -42,7 +42,7 @@ def plot_best_fit_line(x_column, y_column, data):
     )
 
     # Show the plot using Streamlit
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     # Display the equation of the best fit line with intercept equal to zero
     st.write(f"The best fit line for {y_column} with intercept equal to zero is y = {slope:.4f}x")
@@ -66,7 +66,7 @@ def L1(path, target_file):
             device_list = list(set([x.split('_')[-4] for x in all_L1_files]))
             if len(all_L1_files) == 0:
                 st.write("No 528 L1 files found")
-                
+
             else:
                 st.subheader("Level 1", help="CONTINUOUS BLANK TEST WITHOUT INCUBATOR.")
                 L1_df = pd.DataFrame()
@@ -74,7 +74,6 @@ def L1(path, target_file):
 
                 for device in device_list:
                     files = [x for x in all_L1_files if x.find(device) != -1]
-                    files.sort()
 
                     for i, file_name in enumerate(files):
                         with open(os.path.join(path, file_name), 'r') as file:
@@ -150,6 +149,20 @@ def L1(path, target_file):
                 st.dataframe(L1_summary_df,hide_index=True)
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 45/1000)
+
+                with st.form("Graph analysis for L1 528"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L1_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L1_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L1_620:
             all_L1_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L1') != -1 and x.find('620') != -1]
@@ -241,6 +254,20 @@ def L1(path, target_file):
                 st.dataframe(L1_summary_df,hide_index=True)
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
+                
+                with st.form("Graph analysis for L1 620"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L1_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L1_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L1_367:
             all_L1_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L1') != -1 and x.find('367') != -1 and x.find('367') == -1]
@@ -333,6 +360,20 @@ def L1(path, target_file):
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
 
+                with st.form("Graph analysis for L1 367"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L1_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L1_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
+
         with L1_405:
             all_L1_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L1') != -1 and x.find('405') != -1 and x.find('405') == -1]
             device_list = list(set([x.split('_')[-4] for x in all_L1_files]))
@@ -424,6 +465,20 @@ def L1(path, target_file):
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
     
+                with st.form("Graph analysis for L1 405"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L1_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L1_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
+
 
 def L3(path, target_file):
     with st.expander("L3 Test results"):
@@ -518,6 +573,20 @@ def L3(path, target_file):
                 st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 140/1000)
+                
+                with st.form("Graph analysis for L3 528"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L3_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L3_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L3_620:
             all_L3_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L3') != -1 and x.find('620') != -1]
@@ -609,6 +678,20 @@ def L3(path, target_file):
                 st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 200/1000)
+                
+                with st.form("Graph analysis for L3 620"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L3_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L3_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L3_367:
             all_L3_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L3') != -1 and x.find('367') != -1]
@@ -699,6 +782,20 @@ def L3(path, target_file):
                 st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 380/1000)
+                
+                with st.form("Graph analysis for L3 367"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L3_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L3_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L3_405:
             all_L3_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L3') != -1 and x.find('405') != -1]
@@ -789,6 +886,20 @@ def L3(path, target_file):
                 st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 200/1000)
+                
+                with st.form("Graph analysis for L3 405"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L3_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L3_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
 
 def L5(path, target_file):
@@ -896,6 +1007,20 @@ def L5(path, target_file):
                 st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 50/1000)
+                
+                with st.form("Graph analysis for L5 528"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L5_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L5_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L5_620:
             all_L5_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L5') != -1 and x.find('620') != -1]
@@ -998,6 +1123,20 @@ def L5(path, target_file):
                 st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
+                
+                with st.form("Graph analysis for L5 620"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L5_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L5_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L5_367:
             all_L5_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L5') != -1 and x.find('367') != -1]
@@ -1101,6 +1240,20 @@ def L5(path, target_file):
                 st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 110/1000)
+                
+                with st.form("Graph analysis for L5 367"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L5_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L5_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L5_405:
             all_L6_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L5') != -1 and x.find('405') != -1]
@@ -1203,6 +1356,20 @@ def L5(path, target_file):
                 st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
+                
+                with st.form("Graph analysis for L5 405"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L5_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L5_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
 
 def L6(path, target_file):
@@ -1304,6 +1471,20 @@ def L6(path, target_file):
                 st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 85/1000)
+                
+                with st.form("Graph analysis for L6 528"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L6_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L6_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L6_620:
             all_L6_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L6') != -1 and x.find('620') != -1]
@@ -1400,6 +1581,20 @@ def L6(path, target_file):
                 st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
+                
+                with st.form("Graph analysis for L6 620"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L6_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L6_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
         with L6_367:
             all_L6_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L6') != -1 and x.find('367') != -1]
@@ -1497,6 +1692,20 @@ def L6(path, target_file):
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 200/1000)
 
+                with st.form("Graph analysis for L6 367"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L6_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L6_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
+
         with L6_405:
             all_L6_files = [x for x in os.listdir(path) if x.endswith(".txt") and x.find('L6') != -1 and x.find('405') != -1]
             device_list = list(set([x.split('_')[-4] for x in all_L6_files]))
@@ -1592,6 +1801,20 @@ def L6(path, target_file):
                 st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 85/1000)
+                
+                with st.form("Graph analysis for L6 405"):
+                    st.subheader("Graph analysis")
+                    select_device = st.selectbox("Select device", device_list)
+                    submit = st.form_submit_button("Submit")
+
+                    if submit:
+                        columns_with_device = [col for col in L6_df.columns if select_device in col]
+                        columns_with_device.sort()
+                        for col in columns_with_device:
+                            y_data = L6_df.loc[0:, col]
+                            st.write(f"Graph for {col}")
+                            fig = px.line(x=range(len(y_data)), y=y_data, title=f"Graph for {col}", labels={"x": "Index", "y": "Value"})
+                            st.plotly_chart(fig, use_container_width=True)
 
 
 def L7(path, target_file):
