@@ -135,11 +135,17 @@ def L1(path, target_file):
                 L1_summary_df = pd.DataFrame()
                 L1_summary_df['Device'] = device_list
                 L1_summary_df['Number of Files'] = [len([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
-                L1_summary_df["Avg_CV%"] = [L1_df.loc["CV%"].mean() for device in device_list]
-                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L1_df.columns if x.find(device) != -1]
+                    avg_cv = L1_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L1_summary_df["Avg_CV%"] = device_avg_cv
+                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L1_df)
-                
                 st.subheader("Summary")
                 st.dataframe(L1_summary_df,hide_index=True)
 
@@ -220,11 +226,19 @@ def L1(path, target_file):
                 L1_summary_df = pd.DataFrame()
                 L1_summary_df['Device'] = device_list
                 L1_summary_df['Number of Files'] = [len([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
-                L1_summary_df["Avg_CV%"] = [L1_df.loc["CV%"].mean() for device in device_list]
-                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L1_df.columns if x.find(device) != -1]
+                    avg_cv = L1_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L1_summary_df["Avg_CV%"] = device_avg_cv
+                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L1_df)
-                st.dataframe(L1_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L1_summary_df,hide_index=True)
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
 
@@ -303,11 +317,19 @@ def L1(path, target_file):
                 L1_summary_df = pd.DataFrame()
                 L1_summary_df['Device'] = device_list
                 L1_summary_df['Number of Files'] = [len([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
-                L1_summary_df["Avg_CV%"] = [L1_df.loc["CV%"].mean() for device in device_list]
-                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L1_df.columns if x.find(device) != -1]
+                    avg_cv = L1_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L1_summary_df["Avg_CV%"] = device_avg_cv
+                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L1_df)
-                st.dataframe(L1_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L1_summary_df,hide_index=True)
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
 
@@ -382,20 +404,26 @@ def L1(path, target_file):
                                     for k, data_point in enumerate(data_points):
                                         L1_df.at[k, file_name.split('.')[0]] = data_point
 
-                # summary dataframe
                 L1_summary_df = pd.DataFrame()
                 L1_summary_df['Device'] = device_list
                 L1_summary_df['Number of Files'] = [len([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
-                L1_summary_df["Avg_CV%"] = [L1_df.loc["CV%"].mean() for device in device_list]
-                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L1_df.columns if x.find(device) != -1]
+                    avg_cv = L1_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L1_summary_df["Avg_CV%"] = device_avg_cv
+                L1_summary_df['file'] = ['  ||  '.join([x for x in all_L1_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L1_df)
-                st.dataframe(L1_summary_df)
-                st.write(L1_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L1_summary_df,hide_index=True)
 
 
                 limit_filter_bar_plot(device_list, L1_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
-
+    
 
 def L3(path, target_file):
     with st.expander("L3 Test results"):
@@ -472,13 +500,22 @@ def L3(path, target_file):
 
                 # summery dataframe
                 L3_summary_df = pd.DataFrame()
+                L3_summary_df = pd.DataFrame()
                 L3_summary_df['Device'] = device_list
                 L3_summary_df['Number of Files'] = [len([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
-                L3_summary_df["Avg_CV%"] = [L3_df.loc["CV%"].mean() for device in device_list]
-                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L3_df.columns if x.find(device) != -1]
+                    avg_cv = L3_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L3_summary_df["Avg_CV%"] = device_avg_cv
+                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L3_df)
-                st.dataframe(L3_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 140/1000)
 
@@ -554,13 +591,22 @@ def L3(path, target_file):
 
                 # summery dataframe
                 L3_summary_df = pd.DataFrame()
+                L3_summary_df = pd.DataFrame()
                 L3_summary_df['Device'] = device_list
                 L3_summary_df['Number of Files'] = [len([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
-                L3_summary_df["Avg_CV%"] = [L3_df.loc["CV%"].mean() for device in device_list]
-                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L3_df.columns if x.find(device) != -1]
+                    avg_cv = L3_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L3_summary_df["Avg_CV%"] = device_avg_cv
+                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L3_df)
-                st.dataframe(L3_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 200/1000)
 
@@ -635,13 +681,22 @@ def L3(path, target_file):
 
                 # summery dataframe
                 L3_summary_df = pd.DataFrame()
+                L3_summary_df = pd.DataFrame()
                 L3_summary_df['Device'] = device_list
                 L3_summary_df['Number of Files'] = [len([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
-                L3_summary_df["Avg_CV%"] = [L3_df.loc["CV%"].mean() for device in device_list]
-                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L3_df.columns if x.find(device) != -1]
+                    avg_cv = L3_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L3_summary_df["Avg_CV%"] = device_avg_cv
+                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L3_df)
-                st.dataframe(L3_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 380/1000)
 
@@ -716,13 +771,22 @@ def L3(path, target_file):
 
                 # summery dataframe
                 L3_summary_df = pd.DataFrame()
+                L3_summary_df = pd.DataFrame()
                 L3_summary_df['Device'] = device_list
                 L3_summary_df['Number of Files'] = [len([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
-                L3_summary_df["Avg_CV%"] = [L3_df.loc["CV%"].mean() for device in device_list]
-                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L3_df.columns if x.find(device) != -1]
+                    avg_cv = L3_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L3_summary_df["Avg_CV%"] = device_avg_cv
+                L3_summary_df['file'] = ['  ||  '.join([x for x in all_L3_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L3_df)
-                st.dataframe(L3_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L3_summary_df,hide_index=True)
             
                 limit_filter_bar_plot(device_list, L3_summary_df["Avg_CV%"].values, 0/1000, 200/1000)
 
@@ -814,13 +878,22 @@ def L5(path, target_file):
                 
                 # summery dataframe
                 L5_summary_df = pd.DataFrame()
+                L5_summary_df = pd.DataFrame()
                 L5_summary_df['Device'] = device_list
                 L5_summary_df['Number of Files'] = [len([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
-                L5_summary_df["Avg_CV%"] = [L5_df.loc["CV%"].mean() for device in device_list]
-                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L5_df.columns if x.find(device) != -1]
+                    avg_cv = L5_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L5_summary_df["Avg_CV%"] = device_avg_cv
+                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L5_df)
-                st.dataframe(L5_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 50/1000)
 
@@ -907,13 +980,22 @@ def L5(path, target_file):
 
                 # summery dataframe
                 L5_summary_df = pd.DataFrame()
+                L5_summary_df = pd.DataFrame()
                 L5_summary_df['Device'] = device_list
                 L5_summary_df['Number of Files'] = [len([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
-                L5_summary_df["Avg_CV%"] = [L5_df.loc["CV%"].mean() for device in device_list]
-                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L5_df.columns if x.find(device) != -1]
+                    avg_cv = L5_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L5_summary_df["Avg_CV%"] = device_avg_cv
+                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L5_df)
-                st.dataframe(L5_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
 
@@ -1001,13 +1083,22 @@ def L5(path, target_file):
 
                 # summery dataframe
                 L5_summary_df = pd.DataFrame()
+                L5_summary_df = pd.DataFrame()
                 L5_summary_df['Device'] = device_list
                 L5_summary_df['Number of Files'] = [len([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
-                L5_summary_df["Avg_CV%"] = [L5_df.loc["CV%"].mean() for device in device_list]
-                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L5_df.columns if x.find(device) != -1]
+                    avg_cv = L5_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L5_summary_df["Avg_CV%"] = device_avg_cv
+                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L5_df)
-                st.dataframe(L5_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 110/1000)
 
@@ -1094,13 +1185,22 @@ def L5(path, target_file):
 
                 # summery dataframe
                 L5_summary_df = pd.DataFrame()
+                L5_summary_df = pd.DataFrame()
                 L5_summary_df['Device'] = device_list
-                L5_summary_df['Number of Files'] = [len([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
-                L5_summary_df["Avg_CV%"] = [L5_df.loc["CV%"].mean() for device in device_list]
-                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
+                L5_summary_df['Number of Files'] = [len([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L5_df.columns if x.find(device) != -1]
+                    avg_cv = L5_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L5_summary_df["Avg_CV%"] = device_avg_cv
+                L5_summary_df['file'] = ['  ||  '.join([x for x in all_L5_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L5_df)
-                st.dataframe(L5_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L5_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L5_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
 
@@ -1186,13 +1286,22 @@ def L6(path, target_file):
 
                 # summery dataframe
                 L6_summary_df = pd.DataFrame()
+                L6_summary_df = pd.DataFrame()
                 L6_summary_df['Device'] = device_list
                 L6_summary_df['Number of Files'] = [len([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
-                L6_summary_df["Avg_CV%"] = [L6_df.loc["CV%"].mean() for device in device_list]
-                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L6_df.columns if x.find(device) != -1]
+                    avg_cv = L6_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L6_summary_df["Avg_CV%"] = device_avg_cv
+                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L6_df)
-                st.dataframe(L6_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 85/1000)
 
@@ -1273,13 +1382,22 @@ def L6(path, target_file):
 
                 # summery dataframe
                 L6_summary_df = pd.DataFrame()
+                L6_summary_df = pd.DataFrame()
                 L6_summary_df['Device'] = device_list
                 L6_summary_df['Number of Files'] = [len([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
-                L6_summary_df["Avg_CV%"] = [L6_df.loc["CV%"].mean() for device in device_list]
-                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L6_df.columns if x.find(device) != -1]
+                    avg_cv = L6_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L6_summary_df["Avg_CV%"] = device_avg_cv
+                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L6_df)
-                st.dataframe(L6_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
 
@@ -1360,13 +1478,22 @@ def L6(path, target_file):
 
                 # summery dataframe
                 L6_summary_df = pd.DataFrame()
+                L6_summary_df = pd.DataFrame()
                 L6_summary_df['Device'] = device_list
                 L6_summary_df['Number of Files'] = [len([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
-                L6_summary_df["Avg_CV%"] = [L6_df.loc["CV%"].mean() for device in device_list]
-                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L6_df.columns if x.find(device) != -1]
+                    avg_cv = L6_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L6_summary_df["Avg_CV%"] = device_avg_cv
+                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L6_df)
-                st.dataframe(L6_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 200/1000)
 
@@ -1447,13 +1574,22 @@ def L6(path, target_file):
 
                 # summery dataframe
                 L6_summary_df = pd.DataFrame()
+                L6_summary_df = pd.DataFrame()
                 L6_summary_df['Device'] = device_list
                 L6_summary_df['Number of Files'] = [len([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
-                L6_summary_df["Avg_CV%"] = [L6_df.loc["CV%"].mean() for device in device_list]
-                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
 
+                # Calculate average CV% for each device
+                device_avg_cv = []
+                for device in device_list:
+                    same_device_files = [x for x in L6_df.columns if x.find(device) != -1]
+                    avg_cv = L6_df.loc["CV%", same_device_files].mean()
+                    device_avg_cv.append(avg_cv)
+
+                L6_summary_df["Avg_CV%"] = device_avg_cv
+                L6_summary_df['file'] = ['  ||  '.join([x for x in all_L6_files if x.find(device) != -1]) for device in device_list]
                 st.dataframe(L6_df)
-                st.dataframe(L6_summary_df)
+                st.subheader("Summary")
+                st.dataframe(L6_summary_df,hide_index=True)
                 
                 limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 85/1000)
 
