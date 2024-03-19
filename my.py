@@ -25,7 +25,7 @@ def plot_best_fit_line(x_column, y_column, data):
     slope = model.coef_[0][0]
 
     # Create a plot
-    fig = go.Figure()
+    fig = go.Figure(labels={"x": "Spectrophotometer", "y": f"{y_column} Absorbance"})
 
     # Add the scatter plot
     fig.add_trace(go.Scatter(x=x_values.flatten(), y=y_values.flatten(), mode="markers", name=f"{y_column} Data"))
@@ -35,7 +35,7 @@ def plot_best_fit_line(x_column, y_column, data):
 
     # Update layout
     fig.update_layout(
-        title_text=f"Scatter Plot with Best Fit Line (Intercept=0) for {y_column}",
+        title_text=f"Scatter Plot with Best Fit Line for {y_column}",
         showlegend=True,
         width=800,
         height=800
