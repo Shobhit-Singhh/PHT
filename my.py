@@ -118,7 +118,7 @@ def L1(path, target_file):
                                         data_points.append(value)
 
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -223,7 +223,7 @@ def L1(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -328,7 +328,7 @@ def L1(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -433,7 +433,7 @@ def L1(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -541,7 +541,7 @@ def L3(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -646,7 +646,7 @@ def L3(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -750,7 +750,7 @@ def L3(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -854,7 +854,7 @@ def L3(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -975,7 +975,7 @@ def L5(path, target_file):
                                 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1091,7 +1091,7 @@ def L5(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1208,7 +1208,7 @@ def L5(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1324,7 +1324,7 @@ def L5(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1439,7 +1439,7 @@ def L6(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1549,7 +1549,7 @@ def L6(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1659,7 +1659,7 @@ def L6(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1769,7 +1769,7 @@ def L6(path, target_file):
 
                                     # Calculate statistics
                                     mean = np.mean(data_points)
-                                    sd = np.std(data_points)
+                                    sd = np.std(data_points, ddof=1)
                                     cv = (sd / mean) * 100
                                     data_range = max(data_points) - min(data_points)
 
@@ -1883,7 +1883,7 @@ def L7(path, target_file):
                                             data_points.append(value)
 
                                         mean = np.mean(data_points)
-                                        sd = np.std(data_points)
+                                        sd = np.std(data_points, ddof=1)
                                         cv = (sd / mean) * 100
                                         data_range = max(data_points) - min(data_points)
 
@@ -1992,7 +1992,7 @@ def L7(path, target_file):
                                             data_points.append(value)
                                         
                                         mean = np.mean(data_points)
-                                        sd = np.std(data_points)
+                                        sd = np.std(data_points, ddof=1)
                                         cv = (sd / mean) * 100
                                         data_range = max(data_points) - min(data_points)
 
@@ -2100,7 +2100,7 @@ def L7(path, target_file):
                                             data_points.append(value)
                                         
                                         mean = np.mean(data_points)
-                                        sd = np.std(data_points)
+                                        sd = np.std(data_points, ddof=1)
                                         cv = (sd / mean) * 100
                                         data_range = max(data_points) - min(data_points)
 
@@ -2211,7 +2211,7 @@ def L7(path, target_file):
                                             data_points.append(value)
                                         
                                         mean = np.mean(data_points)
-                                        sd = np.std(data_points)
+                                        sd = np.std(data_points, ddof=1)
                                         cv = (sd / mean) * 100
                                         data_range = max(data_points) - min(data_points)
 
