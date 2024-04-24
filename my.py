@@ -1580,7 +1580,7 @@ def L6(path, target_file):
                 st.subheader("Summary")
                 st.dataframe(L6_summary_df,hide_index=True)
                 
-                limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 60/1000)
+                limit_filter_bar_plot(device_list, L6_summary_df["Avg_CV%"].values, 0/1000, 85/1000)
                 
                 with st.form("Graph analysis for L6 620"):
                     st.subheader("Graph analysis")
